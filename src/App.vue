@@ -1,32 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+   <my-cart :cart='cartList' :title="title"></my-cart>
+   <el-button type="success">成功按钮</el-button>
   </div>
 </template>
 
+<script>
+import MyCart from './components/Cart.vue';
+export default {
+  name:'app',
+  data(){
+    return{
+      cartList:[],
+      title:'购物车'
+    };
+  },
+  created(){
+    this.$http.get('/api/cartList').then(res=>{
+    console.log(res.data.result);
+    this.cartList=res.data.result
+    })
+  },
+  components:{
+    MyCart
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
